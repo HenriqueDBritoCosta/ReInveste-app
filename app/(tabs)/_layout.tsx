@@ -1,33 +1,46 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
 import React from 'react';
+import { ThemeProvider, useTheme } from './context/ThemeContext';
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+export default function Layout() {
+  return (
+    <ThemeProvider>
+      <TabsWrapper />
+    </ThemeProvider>
+  );
+}
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+function TabsWrapper() {
+  const { theme } = useTheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
+        tabBarActiveTintColor: '#1e9e89',
+        tabBarStyle: { backgroundColor: theme === 'dark' ? '#222' : '#fff' },
+      }}
+    >
       <Tabs.Screen
-        name="index"
+        name="DashboardScreen"
         options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
+          title: 'Início',
+          tabBarIcon: ({ color, size }) => <Ionicons name="home" color={color} size={size} />,
         }}
       />
       <Tabs.Screen
-        name="explore"
+        name="CounterScreen"
         options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
+          title: 'Dias sem apostas',
+          tabBarIcon: ({ color, size }) => <Ionicons name="timer" color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="ProfileScreen"
+        options={{
+          title: 'Perfil',
+          tabBarIcon: ({ color, size }) => <Ionicons name="person" color={color} size={size} />,
         }}
       />
     </Tabs>
