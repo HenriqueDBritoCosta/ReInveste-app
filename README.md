@@ -4,93 +4,171 @@ Henrique de Brito RM98831
 João Antonio Rihan RM99656
 Rodrigo Fernandes Serafim RM550816
 Adriano Lopes RM98574
+Perfeito! Aqui está uma versão do README **adaptada para o seu projeto ReInveste**, usando o estilo do exemplo que você enviou:
 
-# ReInveste-app
+---
 
-ReInveste é um aplicativo mobile desenvolvido com React Native e Expo, voltado para ajudar usuários a se manterem afastados de apostas, promovendo saúde mental, educação financeira e bem-estar.
+# ReInveste-app 🔥
 
-O app combina funcionalidades de contador de dias sem apostas, acesso a recursos de meditação, suporte psicológico e perfil do usuário, oferecendo uma experiência completa e motivadora.
+Este é um projeto mobile desenvolvido com **React Native** e **Expo**, integrado ao **Firebase Authentication**, voltado para ajudar usuários a se manterem afastados de apostas, promovendo **saúde mental**, **educação financeira** e **bem-estar**.
 
-# Funcionalidades
+---
 
-Tela Dashboard: Tela inicial com navegação rápida para Contador, Meditação e Perfil.
+## 🚀 Tecnologias Utilizadas
 
-Contador de dias sem apostas: Incrementa dias automaticamente e permite reset em caso de recaída.
+* **React Native** - Framework para desenvolvimento mobile multiplataforma
+* **Expo** - Plataforma que simplifica o desenvolvimento React Native
+* **Firebase** - Backend-as-a-Service da Google para autenticação e persistência de dados
+* **TypeScript** - Superset do JavaScript com tipagem estática
 
-Meditation / Exercícios: Links para vídeos de meditação, apoio psicológico e aulas de investimento.
+---
 
-Perfil / Configurações: Tela de perfil do usuário, com botão para alternar entre modo claro e escuro.
+## 📱 Funcionalidades
 
-Tema global claro/escuro: O usuário pode alternar o tema, que se aplica a todas as telas do aplicativo.
+✅ Configuração completa do Firebase
+✅ Sistema de autenticação (login e cadastro)
+✅ Navegação protegida com rotas autenticadas
+✅ Contador de dias sem apostas com reset
+✅ Tela de meditação e links de apoio psicológico
+✅ Tema global claro/escuro
+✅ Interface moderna e responsiva
+✅ Suporte para iOS e Android
 
-# Estrutura do Projeto
+---
 
-app/
-└── (tabs)/ # Telas principais do aplicativo
-├── _layout.tsx # Layout dos Bottom Tabs
-├── DashboardScreen.tsx # Tela inicial
-├── CounterScreen.tsx # Contador de dias sem apostas
-├── MeditationScreen.tsx # Tela de exercícios e meditação
-├── ProfileScreen.tsx # Tela de perfil do usuário
-└── context/
-└── ThemeContext.tsx # Contexto global para tema claro/escuro
-assets/
-└── images/ # Imagens do aplicativo
-components/ # Componentes reutilizáveis
-hooks/ # Hooks personalizados
-constants/ # Constantes do app
+## 🛠️ Configuração do Projeto
 
-# Tecnologias Utilizadas
+### Pré-requisitos
 
-React Native
+* Node.js (versão 16 ou superior)
+* Expo CLI instalado globalmente
+* Conta no Firebase Console
+* Xcode (para iOS) ou Android Studio (para Android)
 
-Expo
+### Instalação
 
-TypeScript
+1. Clone o repositório:
 
-Expo Router
-
-React Context API para tema global
-
-# Instalação
-
-Clone o repositório:
+```bash
 git clone https://github.com/HenriqueDBritoCosta/ReInveste-app.git
-
-Instale as dependências:
 cd ReInveste-app
+```
+
+2. Instale as dependências:
+
+```bash
 npm install
+```
 
-Execute o app:
+3. Configure o Firebase:
+
+* Crie um projeto no [Firebase Console](https://console.firebase.google.com/)
+* Ative a autenticação por Email/Senha
+* Crie o arquivo `app/config/firebaseConfig.ts` com suas credenciais:
+
+```ts
+import { initializeApp } from "firebase/app";
+import { initializeAuth, getReactNativePersistence } from "firebase/auth";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const firebaseConfig = {
+  apiKey: "SUA_API_KEY",
+  authDomain: "SEU_AUTH_DOMAIN",
+  projectId: "SEU_PROJECT_ID",
+  storageBucket: "SEU_STORAGE_BUCKET",
+  messagingSenderId: "SEU_MESSAGING_SENDER_ID",
+  appId: "SEU_APP_ID",
+};
+
+const app = initializeApp(firebaseConfig);
+export const auth = initializeAuth(app, {
+  persistence: getReactNativePersistence(AsyncStorage),
+});
+```
+
+4. Instale o AsyncStorage se ainda não tiver:
+
+```bash
+npm install @react-native-async-storage/async-storage
+```
+
+5. Execute o projeto:
+
+```bash
 npx expo start
+```
 
-# Uso
+---
 
-Abra o aplicativo no simulador ou dispositivo físico usando o QR Code fornecido pelo Expo.
+## 📁 Estrutura do Projeto
 
-Navegue pelas abas Dashboard, Dias sem apostas e Perfil.
+```
+app/
+└── (tabs)/                 # Telas principais do aplicativo
+    ├── _layout.tsx          # Layout dos Bottom Tabs
+    ├── DashboardScreen.tsx  # Tela inicial
+    ├── CounterScreen.tsx    # Contador de dias sem apostas
+    ├── MeditationScreen.tsx # Tela de exercícios e meditação
+    ├── ProfileScreen.tsx    # Tela de perfil do usuário
+    └── context/
+        └── ThemeContext.tsx # Contexto global para tema claro/escuro
+config/
+└── firebaseConfig.ts        # Configuração do Firebase
+assets/
+└── images/                  # Recursos visuais
+components/                   # Componentes reutilizáveis
+hooks/                        # Hooks personalizados
+constants/                    # Constantes do app
+```
 
-Use o botão de alternar tema na tela de Perfil para mudar entre modo claro e escuro.
+---
 
-No Dashboard, acesse a tela de Meditation para abrir links de exercícios, apoio psicológico e aulas de investimento.
+## 🔐 Autenticação
 
-No Contador, incremente os dias sem apostas ou resete o contador em caso de recaída.
+O sistema de autenticação inclui:
 
-# Melhorias Futuras
+* **Login** - Autenticação com email e senha
+* **Cadastro** - Criação de novas contas
+* **Proteção de rotas** - Apenas usuários autenticados acessam certas telas
+* **Persistência** - Estado de login mantido entre sessões
 
-Persistência de dados com AsyncStorage para salvar contador e preferências de tema.
+---
 
-Notificações push para lembrar o usuário de manter hábitos saudáveis.
+## 📱 Plataformas Suportadas
 
-Feedback visual com animações ao alternar temas e resetar contador.
+* iOS - Desenvolvido e testado
+* Android - Desenvolvido e testado
+* Web - Suporte básico via Expo
 
-Testes unitários e de integração para maior estabilidade.
+---
 
-# Contribuição
+## 💡 Melhorias Futuras
 
-Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
-Certifique-se de seguir o padrão de código e manter o estilo do projeto.
+* Notificações push para lembrar hábitos saudáveis
+* Feedback visual com animações ao alternar temas e resetar contador
+* Testes unitários e de integração para maior estabilidade
 
-# Licença
+---
 
-Este projeto está sob a licença MIT. Veja o arquivo LICENSE para mais detalhes.
+## 🤝 Contribuição
+
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/NomeFeature`)
+3. Commit suas mudanças (`git commit -m 'Add feature X'`)
+4. Push para a branch (`git push origin feature/NomeFeature`)
+5. Abra um Pull Request
+
+---
+
+## 📄 Licença
+
+Este projeto está sob a licença **MIT**. Veja o arquivo LICENSE para mais detalhes.
+
+---
+
+## 📞 Suporte
+
+* Consulte a documentação do [Expo](https://docs.expo.dev/)
+* Consulte a documentação do [Firebase](https://firebase.google.com/docs)
+
+---
