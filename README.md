@@ -31,7 +31,6 @@ Este é um projeto mobile desenvolvido com **React Native** e **Expo**, integrad
 ✅ Tela de meditação e links de apoio psicológico
 ✅ Tema global claro/escuro
 ✅ Interface moderna e responsiva
-✅ Suporte para iOS e Android
 
 ---
 
@@ -77,6 +76,7 @@ const firebaseConfig = {
   storageBucket: "SEU_STORAGE_BUCKET",
   messagingSenderId: "SEU_MESSAGING_SENDER_ID",
   appId: "SEU_APP_ID",
+  databaseURL: "SEU_ULR",
 };
 
 const app = initializeApp(firebaseConfig);
@@ -99,30 +99,6 @@ npx expo start
 
 ```
 
----
-
-## 📁 Estrutura do Projeto
-
-```
-app/
-└── (tabs)/                 # Telas principais do aplicativo
-    ├── _layout.tsx          # Layout dos Bottom Tabs
-    ├── DashboardScreen.tsx  # Tela inicial
-    ├── CounterScreen.tsx    # Contador de dias sem apostas
-    ├── MeditationScreen.tsx # Tela de exercícios e meditação
-    ├── ProfileScreen.tsx    # Tela de perfil do usuário
-    └── context/
-        └── ThemeContext.tsx # Contexto global para tema claro/escuro
-config/
-└── firebaseConfig.ts        # Configuração do Firebase
-assets/
-└── images/                  # Recursos visuais
-components/                   # Componentes reutilizáveis
-hooks/                        # Hooks personalizados
-constants/                    # Constantes do app
-```
-
----
 
 ## 🔐 Autenticação
 
@@ -131,15 +107,12 @@ O sistema de autenticação inclui:
 * **Login** - Autenticação com email e senha
 * **Cadastro** - Criação de novas contas
 * **Proteção de rotas** - Apenas usuários autenticados acessam certas telas
-* **Persistência** - Estado de login mantido entre sessões
 
 ---
 
 ## 📱 Plataformas Suportadas
 
-* iOS - Desenvolvido e testado
 * Android - Desenvolvido e testado
-* Web - Suporte básico via Expo
 
 ---
 
