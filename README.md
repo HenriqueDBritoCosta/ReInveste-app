@@ -1,11 +1,12 @@
 # Integrantes
 
-|Rodrigo Lima |RM98326|
-|Henrique de Brito |RM98831|
-|João Antonio Rihan |RM99656|
-|Rodrigo Fernandes Serafim |RM550816|
-|Adriano Lopes |RM98574|
-
+| Nome | RM |
+|------|-----|
+| Adriano Lopes | RM98574 |
+| Henrique de Brito | RM98831 |
+| João Antonio Rihan | RM99656 |
+| Rodrigo Fernandes Serafim | RM550816 |
+| Rodrigo Lima | RM98326 |
 ---
 
 # ReInveste-app 🔥
