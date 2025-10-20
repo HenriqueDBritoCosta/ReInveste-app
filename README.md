@@ -1,10 +1,9 @@
 # Integrantes
-Rodrigo Lima RM98326
-Henrique de Brito RM98831
-João Antonio Rihan RM99656
-Rodrigo Fernandes Serafim RM550816
-Adriano Lopes RM98574
-Perfeito! Aqui está uma versão do README **adaptada para o seu projeto ReInveste**, usando o estilo do exemplo que você enviou:
+|Rodrigo Lima |RM98326|
+|Henrique de Brito |RM98831|
+|João Antonio Rihan |RM99656|
+|Rodrigo Fernandes Serafim |RM550816|
+|Adriano Lopes |RM98574|
 
 ---
 
@@ -50,7 +49,7 @@ Este é um projeto mobile desenvolvido com **React Native** e **Expo**, integrad
 1. Clone o repositório:
 
 ```bash
-git clone https://github.com/HenriqueDBritoCosta/ReInveste-app.git
+git clone https://github.com/HenriqueDBritoCosta/ReInveste-app.git 
 cd ReInveste-app
 ```
 
@@ -95,7 +94,9 @@ npm install @react-native-async-storage/async-storage
 5. Execute o projeto:
 
 ```bash
+npx expo prebuild
 npx expo start
+
 ```
 
 ---

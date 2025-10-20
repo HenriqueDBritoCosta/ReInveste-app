@@ -1,3 +1,4 @@
+//app/index.ts
 import { Redirect } from "expo-router";
 
 export default function Index() {

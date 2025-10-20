@@ -1,19 +1,14 @@
+// app/login.tsx
 import { useRouter } from "expo-router";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { get, ref } from "firebase/database";
 import React, { useState } from "react";
-import {
-  Alert,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { Alert, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { auth, db } from "../config/firebaseConfig";
 
-const LoginScreen: React.FC = () => {
+export default function LoginScreen() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -22,101 +17,95 @@ const LoginScreen: React.FC = () => {
       return;
     }
 
-    setLoading(true);
     try {
-      const auth = getAuth();
-      await signInWithEmailAndPassword(auth, email, senha);
+      const userCredential = await signInWithEmailAndPassword(auth, email, senha);
+      const user = userCredential.user;
 
-      
-      router.replace("/(tabs)/DashboardScreen");
+      // Busca dados do aluno
+      const snapshot = await get(ref(db, `alunos/${user.uid}`));
+      const data = snapshot.val();
+
+      Alert.alert("Sucesso", "Login realizado!");
+      // Redireciona para o dashboard
+      router.replace({
+        pathname: "/(tabs)/DashboardScreen",
+        params: {
+          userName: data?.nome || "",
+          userPhoto: data?.foto || "",
+        },
+      });
     } catch (error: any) {
-      Alert.alert("Erro", error.message || "Credenciais inválidas");
-    } finally {
-      setLoading(false);
+      Alert.alert("Erro ao logar", error.message || "Erro desconhecido");
     }
+  };
+
+  const irParaCadastro = () => {
+    router.replace("/CadastroScreen");
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>ReInveste</Text>
-      <Text style={styles.subtitle}>Login</Text>
+      <Text style={styles.title}>Login FIAP</Text>
 
       <TextInput
         style={styles.input}
         placeholder="Email"
+        value={email}
         onChangeText={setEmail}
         keyboardType="email-address"
         autoCapitalize="none"
       />
+
       <TextInput
         style={styles.input}
         placeholder="Senha"
+        value={senha}
         onChangeText={setSenha}
         secureTextEntry
       />
 
-      <TouchableOpacity
-        style={styles.button}
-        onPress={handleLogin}
-        disabled={loading}
-      >
-        <Text style={styles.buttonText}>
-          {loading ? "Carregando..." : "Entrar"}
-        </Text>
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Entrar</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity onPress={() => router.push("./CadastroScreen")}>
-        <Text style={styles.linkText}>Criar Conta</Text>
+      <TouchableOpacity style={[styles.button, { backgroundColor: "#555" }]} onPress={irParaCadastro}>
+        <Text style={styles.buttonText}>Cadastrar</Text>
       </TouchableOpacity>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#124668",
     padding: 20,
+    backgroundColor: "#fff",
   },
   title: {
-    fontSize: 30,
+    fontSize: 26,
     fontWeight: "bold",
-    color: "#fff",
-    marginBottom: 40,
+    marginBottom: 30,
   },
-  subtitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff",
-    marginBottom: 40,
+  input: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 8,
+    padding: 12,
+    marginBottom: 12,
   },
   button: {
-    backgroundColor: "#1e9e89",
-    padding: 15,
-    borderRadius: 10,
-    width: "80%",
+    width: "100%",
+    padding: 14,
+    backgroundColor: "#007bff",
+    borderRadius: 8,
     alignItems: "center",
-    marginTop: 15,
+    marginTop: 8,
   },
   buttonText: {
     color: "#fff",
     fontWeight: "bold",
-    fontSize: 16,
-  },
-  input: {
-    backgroundColor: "#fff",
-    width: "80%",
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 8,
-    padding: 10,
-    marginBottom: 15,
-  },
-  linkText: {
-    color: "#fff",
   },
 });
-
-export default LoginScreen;

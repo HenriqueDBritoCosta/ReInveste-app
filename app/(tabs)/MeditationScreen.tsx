@@ -1,40 +1,56 @@
+// app/(tabs)/MeditationScreen.tsx
+import { useTheme } from '@/context/ThemeContext';
 import { useRouter } from 'expo-router';
-import React from 'react';
-import { Linking, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import { useTheme } from './context/ThemeContext';
+import { Linking, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import ActionCard from '../components/ActionCard';
 
 export default function MeditationScreen() {
-  const router = useRouter();
   const { theme } = useTheme();
+  const router = useRouter();
+  const styles = createStyles(theme);
 
-  const abrirLink = (url: string) => Linking.openURL(url).catch(err => console.error('Erro ao abrir link:', err));
-
-  const styles = StyleSheet.create({
-    container: { flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff' },
-    title: { fontSize: 28, fontWeight: 'bold', color: '#1e9e89', marginBottom: 30 },
-    button: { backgroundColor: theme === 'dark' ? '#333' : '#1e9e89', padding: 15, borderRadius: 10, width: '80%', alignItems: 'center', marginVertical: 8 },
-    buttonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
-  });
+  const openLink = (url: string) => Linking.openURL(url).catch(() => null);
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>ReInveste</Text>
+    <SafeAreaView style={styles.safe}>
+      <View style={styles.container}>
+        <Text style={styles.title}>Bem-estar</Text>
+        <Text style={styles.subtitle}>Recursos para reduzir a ansiedade e lidar com impulsos.</Text>
 
-      <TouchableOpacity style={styles.button} onPress={() => abrirLink('https://youtu.be/A-_MfC5Mk9Y?si=zfy6KiRHqLb98r2D')}>
-        <Text style={styles.buttonText}>Exercícios de meditação</Text>
-      </TouchableOpacity>
+        <View style={{ width: '100%', marginTop: 18 }}>
+          <ActionCard
+            title="Meditações guiadas"
+            subtitle="Práticas de 3 a 15 minutos"
+            icon="flower"
+            color="#6C63FF"
+            onPress={() => openLink('https://youtu.be/A-_MfC5Mk9Y?si=zfy6KiRHqLb98r2D')}
+          />
 
-      <TouchableOpacity style={styles.button} onPress={() => abrirLink('https://unolife.com.br/terapia-para-vicio-em-bets/')}>
-        <Text style={styles.buttonText}>Apoio psicológico</Text>
-      </TouchableOpacity>
+          <ActionCard
+            title="Apoio psicológico"
+            subtitle="Artigos e serviços profissionais"
+            icon="people"
+            color="#1E9E89"
+            onPress={() => openLink('https://unolife.com.br/terapia-para-vicio-em-bets/')}
+          />
 
-      <TouchableOpacity style={styles.button} onPress={() => abrirLink('https://youtu.be/Q6x0xnI0uCg?si=eE9e2V_wmfSLmG41')}>
-        <Text style={styles.buttonText}>Aulas sobre investimento</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={styles.button} onPress={() => router.push('/(tabs)/DashboardScreen')}>
-        <Text style={styles.buttonText}>Voltar para o Início</Text>
-      </TouchableOpacity>
-    </View>
+          <ActionCard
+            title="Aprenda sobre investimentos"
+            subtitle="Aulas e conteúdos básicos"
+            icon="school"
+            color="#FF9F43"
+            onPress={() => openLink('https://youtu.be/Q6x0xnI0uCg?si=eE9e2V_wmfSLmG41')}
+          />
+        </View>
+      </View>
+    </SafeAreaView>
   );
 }
+
+const createStyles = (theme: string) =>
+  StyleSheet.create({
+    safe: { flex: 1, backgroundColor: theme === 'dark' ? '#0b0b0b' : '#fff' },
+    container: { padding: 20, alignItems: 'center' },
+    title: { fontSize: 24, fontWeight: '700', color: '#1E9E89' },
+    subtitle: { marginTop: 6, color: theme === 'dark' ? '#ddd' : '#666', textAlign: 'center' },
+  });

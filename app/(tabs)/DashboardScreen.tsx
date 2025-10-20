@@ -1,38 +1,72 @@
+// app/(tabs)/DashboardScreen.tsx
+import { useTheme } from '@/context/ThemeContext';
 import { useRouter } from 'expo-router';
-import React from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { useTheme } from './context/ThemeContext';
+import { SafeAreaView, ScrollView, StyleSheet, Text, View } from 'react-native';
+import ActionCard from '../components/ActionCard';
 
 export default function DashboardScreen() {
   const router = useRouter();
   const { theme } = useTheme();
-
-  const styles = StyleSheet.create({
-    container: { flexGrow: 1, justifyContent: 'center', alignItems: 'center', padding: 20, backgroundColor: theme === 'dark' ? '#1e1e1e' : '#fff' },
-    title: { fontSize: 28, fontWeight: 'bold', color: '#1e9e89', marginBottom: 30 },
-    button: { backgroundColor: theme === 'dark' ? '#333' : '#1e9e89', padding: 15, borderRadius: 10, width: '80%', alignItems: 'center', marginVertical: 8 },
-    buttonText: { color: '#fff', fontWeight: 'bold', fontSize: 16 },
-  });
-
-  const telas = [
-    { title: 'Tratamento', screen: '/(tabs)/MeditationScreen' },
-    { title: 'Contador', screen: '/(tabs)/CounterScreen' },
-    { title: 'Perfil', screen: '/(tabs)/ProfileScreen' },
-  ];
+  const styles = createStyles(theme);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>ReInveste</Text>
+    <SafeAreaView style={styles.safe}>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text style={styles.greeting}>Olá 👋</Text>
+        <Text style={styles.title}>ReInveste</Text>
+        <Text style={styles.subtitle}>Reeducação emocional e financeira — passos curtos, progresso real.</Text>
 
-      {telas.map(item => (
-        <TouchableOpacity
-          key={item.screen}
-          style={styles.button}
-          onPress={() => router.push(item.screen)}
-        >
-          <Text style={styles.buttonText}>{item.title}</Text>
-        </TouchableOpacity>
-      ))}
-    </ScrollView>
+        <View style={{ width: '100%', marginTop: 18 }}>
+          <ActionCard
+            title="Saúde emocional"
+            subtitle="Meditações, apoio e diário de humor"
+            icon="heart"
+            color="#4D96FF"
+            onPress={() => router.push('/(tabs)/MeditationScreen')}
+          />
+
+          <ActionCard
+            title="Dias sem apostas"
+            subtitle="Acompanhe seu progresso e veja conquistas"
+            icon="trophy"
+            color="#1E9E89"
+            onPress={() => router.push('/(tabs)/CounterScreen')}
+          />
+
+          <ActionCard
+            title="Aprenda sobre investimentos"
+            subtitle="Trilhas educativas e aulas práticas"
+            icon="school"
+            color="#FF9F43"
+            onPress={() => router.push('/(tabs)/MeditationScreen')}
+          />
+        </View>
+
+        <View style={{ marginTop: 24, width: '100%' }}>
+          <Text style={styles.sectionTitle}>Dicas rápidas</Text>
+          <View style={styles.hintBox}>
+            <Text style={styles.hintText}>Se sentir vontade de apostar: respire 3x, abra aqui um exercício de 3 minutos e anote no diário.</Text>
+          </View>
+        </View>
+
+        <View style={{ height: 60 }} />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
+
+const createStyles = (theme: string) =>
+  StyleSheet.create({
+    safe: { flex: 1, backgroundColor: theme === 'dark' ? '#121212' : '#fff' },
+    container: { alignItems: 'center', padding: 20 },
+    greeting: { fontSize: 16, color: theme === 'dark' ? '#ccc' : '#666' },
+    title: { fontSize: 32, fontWeight: '700', color: '#1E9E89', marginTop: 6 },
+    subtitle: { fontSize: 14, color: theme === 'dark' ? '#ddd' : '#666', marginTop: 6, maxWidth: 420 },
+    sectionTitle: { fontSize: 16, fontWeight: '700', color: theme === 'dark' ? '#fff' : '#222', marginBottom: 8 },
+    hintBox: {
+      backgroundColor: theme === 'dark' ? '#1b1b1b' : '#f6f8fa',
+      padding: 12,
+      borderRadius: 12,
+    },
+    hintText: { color: theme === 'dark' ? '#ddd' : '#333' },
+  });
